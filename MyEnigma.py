@@ -24,13 +24,26 @@ class Rotor():
             print("{} no pertenece al abecedario".format(letra))
 
     
+
     def posicionInicial(self, letra):
         position = self.abecedario.index(letra)
         self.rotorC = self.rotor[position:]+self.rotor[:position]
         return self.rotorC
     
-    def avanza(self):
+
+    def avanza(self): #Solo codifica, no avanza el motor
         self.rotorC = self.rotorC[1:]+self.rotorC[:0]
+
+
+    # Hay que escribir la el resultado de la letra ya codificada. Si escribimos C, nos dará la A, por tanto tenemos que poner la A.
+    def descodifica(self, letra):  
+        contador = 0
+        for i in self.rotorC:
+            contador += 1
+            if i[1] == letra:
+                indice = contador
+                break
+        return self.abecedario[indice]
 
 
 r = Rotor()
