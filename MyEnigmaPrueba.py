@@ -20,6 +20,7 @@ class Rotor():
         self.__mensaje = mensaje
         self.posicionInicial(letraInicio)
         self.codifica(mensaje)
+        
 
     def startDescodificar(self, letraInicio, mensaje):
         self.__letraInicio = letraInicio
@@ -43,9 +44,12 @@ class Rotor():
     def codifica(self, mensaje):
         for i in mensaje:
             try:
-                pLetra = self.abecedario.index(i)
-                print(self.rotorC[pLetra][1], end="")
-                self.avanza()
+                if i == " ":
+                    print(" ", end="")
+                else:
+                    pLetra = self.abecedario.index(i)
+                    print(self.rotorC[pLetra][1], end="")
+                    self.avanza()
             except ValueError:
                 print("{} no pertenece al abecedario".format(mensaje))   
 
@@ -54,24 +58,26 @@ class Rotor():
     def descodifica(self, palabra):
         for l in palabra: 
             contador = -1
-            for i in self.rotorC:
-                contador += 1
-                if i[1] == l:
-                    indice = contador
-                    print(self.abecedario[indice], end="")
-                    self.avanza()
-                    break
+            if l == " ":
+                print(" ", end="")
+            else:
+                for i in self.rotorC:
+                    contador += 1
+                    if i[1] == l:
+                        indice = contador
+                        print(self.abecedario[indice], end="")
+                        self.avanza()
+                        break
 
 
         
 
 r = Rotor()
 print(r.posicionInicial('C'))
-r.startCodificar('C', 'CASA')
+r.startCodificar('C', 'CASA MI')
 
 print()
-r.startDescodificar('C', 'VETK')
-
+r.startDescodificar('C', r.startCodificar())
 
 # print(r.posicionInicial('C'))
 # print(r.avanza())
