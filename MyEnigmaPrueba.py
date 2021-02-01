@@ -8,7 +8,7 @@ class Rotor():
         self.abecedario = abecedario
         otrasLetras = list(self.abecedario)
         self.rotor=[]
-        self.mensaje=""
+        self.mensajeCodificado=""
         for l in self.abecedario:
             n = random.randrange(len(otrasLetras))
             self.rotor.append((l, otrasLetras[n]))
@@ -21,7 +21,6 @@ class Rotor():
         self.__mensaje = mensaje
         self.posicionInicial(letraInicio)
         self.codifica(mensaje)
-        print()
         
 
     def startDescodificar(self, letraInicio, mensaje):
@@ -45,14 +44,15 @@ class Rotor():
 
     def codifica(self, mensaje):
         for i in mensaje:
+            i=i.upper()
             try:
                 if i == " ":
                     print(" ", end="")
-                    self.mensaje += i
+                    self.mensajeCodificado += i
                 else:
                     pLetra = self.abecedario.index(i)
                     letraCodificada = self.rotorC[pLetra][1]
-                    self.mensaje += letraCodificada
+                    self.mensajeCodificado += letraCodificada
                     print(letraCodificada, end="")
                     self.avanza()
             except ValueError:
@@ -61,6 +61,7 @@ class Rotor():
 
     def descodifica(self, mensaje):
         for l in mensaje: 
+            l=l.upper()
             contador = -1
             if l == " ":
                 print(" ", end="")
@@ -77,8 +78,9 @@ class Rotor():
 
 r = Rotor()
 print(r.posicionInicial('C'))
-r.startCodificar('C', 'MI CASA')
-r.startDescodificar('C', r.mensaje)
+r.startCodificar('C', 'Mi Casa')
+print()
+r.startDescodificar('C', r.mensajeCodificado)
 
 # print(r.posicionInicial('C'))
 # print(r.avanza())
