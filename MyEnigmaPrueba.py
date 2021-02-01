@@ -8,6 +8,7 @@ class Rotor():
         self.abecedario = abecedario
         otrasLetras = list(self.abecedario)
         self.rotor=[]
+        self.mensaje=""
         for l in self.abecedario:
             n = random.randrange(len(otrasLetras))
             self.rotor.append((l, otrasLetras[n]))
@@ -20,6 +21,7 @@ class Rotor():
         self.__mensaje = mensaje
         self.posicionInicial(letraInicio)
         self.codifica(mensaje)
+        print()
         
 
     def startDescodificar(self, letraInicio, mensaje):
@@ -46,17 +48,19 @@ class Rotor():
             try:
                 if i == " ":
                     print(" ", end="")
+                    self.mensaje += i
                 else:
                     pLetra = self.abecedario.index(i)
-                    print(self.rotorC[pLetra][1], end="")
+                    letraCodificada = self.rotorC[pLetra][1]
+                    self.mensaje += letraCodificada
+                    print(letraCodificada, end="")
                     self.avanza()
             except ValueError:
                 print("{} no pertenece al abecedario".format(mensaje))   
 
 
-    #Hay que escribir la el resultado de la letra ya codificada. Si escribimos C, nos dará la A, por tanto tenemos que poner la A.
-    def descodifica(self, palabra):
-        for l in palabra: 
+    def descodifica(self, mensaje):
+        for l in mensaje: 
             contador = -1
             if l == " ":
                 print(" ", end="")
@@ -69,15 +73,12 @@ class Rotor():
                         self.avanza()
                         break
 
-
-        
+         
 
 r = Rotor()
 print(r.posicionInicial('C'))
-r.startCodificar('C', 'CASA MI')
-
-print()
-r.startDescodificar('C', r.startCodificar())
+r.startCodificar('C', 'MI CASA')
+r.startDescodificar('C', r.mensaje)
 
 # print(r.posicionInicial('C'))
 # print(r.avanza())
