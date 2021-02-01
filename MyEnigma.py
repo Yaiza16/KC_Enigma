@@ -15,13 +15,21 @@ class Rotor():
 
         self.rotorC = self.rotor[:]
 
+    def startCodificar(self, letraInicio, mensaje):
+        self.letraInicio = letraInicio
+        self.mensaje = mensaje
+        self.posicionInicial(letraInicio)
+        self.codifica(mensaje)
+
     
-    def codifica(self, letra):
-        try:
-            pLetra = self.abecedario.index(letra)
-            return self.rotorC[pLetra][1]
-        except ValueError:
-            print("{} no pertenece al abecedario".format(letra))
+    def codifica(self, mensaje):
+        for i in mensaje:
+            try:
+                pLetra = self.abecedario.index(i)
+                print(self.rotorC[pLetra][1], end="")
+                self.avanza()
+            except ValueError:
+                print("{} no pertenece al abecedario".format(mensaje))
 
     
 
