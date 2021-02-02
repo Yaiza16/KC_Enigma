@@ -1,9 +1,11 @@
 import random
 
 """
+    COSAS A ARREGLAR:
+    + Función refleja de la clase Reflector muy enrevesada.
+    
     FUNCIONAMIENTO REFLECTOR:
-    Las letras del abecedario del reflector irán emparejadas. En el caso de que el abecedario
-    sea impar, una de esas letras irá unida consigo misma.
+    Las letras del abecedario del reflector irán emparejadas. En el caso de que el abecedario sea impar, una de esas letras irá unida consigo misma. No pueden ir emparejadas consigo mismas a no ser que el abecedario sea impar.
     
     + Creación de la clase Rotor
 
@@ -57,42 +59,63 @@ class Reflector():
 
 
 
-# class Rotor():
+class Rotor():
 
-#     def __init__(self, abecedario="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"):
-#         self.abecedario=abecedario
-#         self.conexion=[]
-#         cadenaPosiciones=[]
-#         listaNumerica = []
+    def __init__(self, abecedario="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"):
+        self.abecedario=abecedario
+        cadenaPosiciones=[]
+        listaNumerica = []
+        self.conexion=[]
         
-#         contador = 0
-#         for i in abecedario: #Generamos una lista que irá desde el 0 hasta el total de posiciones que tiene el abecedario. Esto lo haremos para que, a la hora de crear el rotor(letra, conexión), sea más fácil.
-#             listaNumerica.append(contador)
-#             contador +=1
+        contador = 0
+        for i in abecedario: #Generamos una lista que irá desde el 0 hasta el total de posiciones que tiene el abecedario. Esto lo haremos para que, a la hora de crear el rotor(letra, conexión), sea más fácil.
+            listaNumerica.append(contador)
+            contador +=1
 
-#         for i in self.abecedario: #Asignamos cada letra con una posición.
-#             n = random.randrange(len(listaNumerica))
-#             self.conexion.append((i, listaNumerica[n]))
-#             listaNumerica.pop(n)
+        for i in self.abecedario: #Asignamos cada letra con una posición.
+            n = random.randrange(len(listaNumerica))
+            self.conexion.append((i, listaNumerica[n]))
+            listaNumerica.pop(n)
 
-#         print(listaNumerica)
-#         print(self.conexion)
-
-
-#     def codifica(self, letra):
-#         letra
+        print(listaNumerica)
+        print(self.conexion)
 
 
+    def codifica(self, letra): 
+        n = self.abecedario.index(letra)
+        m = self.conexion[n][1]
+        return m
+
+    def avanza(self):
+        cadena = []
+        copiaRotor = self.conexion[:]
+        for i in copiaRotor:
+            n = copiaRotor.index(i)
+            cadena.append(copiaRotor[n][1])
+
+        cadenaAvanza = cadena[1:]+cadena[:1]
+        contador = 0
+        for i in copiaRotor:
+            copiaRotor[contador]= ((copiaRotor[contador][0]), cadenaAvanza[contador])
+            contador +=1
+        self.conexion=copiaRotor
+        
+        return self.conexion
+
+    
 
 
 
-
+"""
+PRUEBA REFLECTOR:
 r= Reflector()
 r.refleja()
 print(r.configuracion)
 
 # print(len(r.abecedario))
+"""
 
-
-# ro=Rotor()
+ro=Rotor()
+print(ro.codifica('N'))
+print(ro.avanza())
 
