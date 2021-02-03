@@ -3,6 +3,9 @@ import random
 """
     COSAS A ARREGLAR:
     + Función refleja de la clase Reflector muy enrevesada.
+    + ¿Necesario poner el abecedario en todas las clases?
+    + Hacer Enigma.conexion con blucles. 
+    + ¿número de rotores variables?
     
     FUNCIONAMIENTO REFLECTOR:
     Las letras del abecedario del reflector irán emparejadas. En el caso de que el abecedario sea impar, una de esas letras irá unida consigo misma. No pueden ir emparejadas consigo mismas a no ser que el abecedario sea impar.
@@ -12,12 +15,54 @@ import random
     + Creación de la clase Enigma
 
 """
+class Enigma():
+
+    def __init__(self, mensaje, abecedario="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"):
+        self.abecedario = abecedario
+        self.rotor1 = Rotor()
+        self.rotor2 = Rotor()
+        self.rotor3 = Rotor()
+        self.reflector = Reflector()
+        self.mensaje = mensaje.upper()
+        self.mensajeCodificado = ""
+
+    def conexion(self, letra):
+        abecedario = list(self.abecedario)
+
+        posicionLetraInicial = self.abecedario.index(letra)
+        posicionPrimerRotor = self.rotor1.conexion[posicionLetraInicial]
+        conexionPrimerRotor = posicionPrimerRotor[1]
+        posicionSegundoRotor = self.rotor2.conexion[conexionPrimerRotor]
+        conexionSegundoRotor = posicionSegundoRotor[1]
+        posicionTercerRotor = self.rotor3.conexion[conexionSegundoRotor]
+        conexionTercerRotor = posicionTercerRotor[1]
+        posicionReflector = self.reflector.configuracion[conexionTercerRotor]
+        letraReflejada = posicionReflector[1]
+        conexionReflectorVuelta = abecedario.index(letraReflejada)
+        posicionTercerRotorVuelta = self.rotor3.conexion[conexionReflectorVuelta]
+        conexionTercerRotorVuelta = posicionTercerRotorVuelta[1]
+        posicionSegundoRotorVuelta = self.rotor2.conexion[conexionTercerRotorVuelta]
+        conexionSegundoRotorVuelta = posicionSegundoRotorVuelta[1]
+        posicionPrimerRotorVuelta = self.rotor1.conexion[conexionSegundoRotorVuelta]
+        conexionPrimerRotorVuelta = posicionPrimerRotorVuelta[1]
+        letraCodificada = abecedario[conexionPrimerRotorVuelta]
+        
+        self.mensajeCodificado += letraCodificada
+        
+        
+            
+          
+
+    
+
+
 
 class Reflector():
 
     def __init__(self, abecedario="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"):
         self.abecedario= abecedario
         self.configuracion= [] #Guardará el reflector que se creará en la función refleja
+        self.refleja()
     
     def refleja(self):
         listaAbecedario = list(self.abecedario) #Lo convertimos en lista para poder luego trabajar con el random 
@@ -114,8 +159,14 @@ print(r.configuracion)
 
 # print(len(r.abecedario))
 """
-
+"""
+PRUEBA ROTOR:
 ro=Rotor()
 print(ro.codifica('N'))
 print(ro.avanza())
+"""
 
+# e = Enigma("Hola")
+# e.codifica()
+e = Enigma("F")
+e.conexion("F") 
